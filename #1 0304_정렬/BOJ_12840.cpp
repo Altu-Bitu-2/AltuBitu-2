@@ -3,11 +3,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define DAY 86400;
+#define DAY 86400
 
 void print_t(int sum)
 {
     int ph, pm, ps;
+
+    if (sum < 0)
+    {
+        sum += DAY;
+    }
 
     ph = sum / 3600;
     pm = sum % 3600 / 60;
@@ -35,19 +40,14 @@ int main(void)
         {
         case 1:
             cin >> c;
-            sum += c % DAY;
+            sum += c;
             break;
         case 2:
             cin >> c;
-            sum -= c % DAY;
-
-            if (sum < 0)
-            {
-                sum += DAY;
-            }
-
+            sum -= c;
             break;
         case 3:
+            sum %= DAY;
             print_t(sum);
             break;
         }
@@ -55,5 +55,3 @@ int main(void)
 
     return 0;
 }
-
-// NOT DONE
