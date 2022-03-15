@@ -1,38 +1,38 @@
 /* 암기왕 */
 
 #include <bits/stdc++.h>
+#include <stdio.h>
 using namespace std;
 
 int main(void)
 {
     ios::sync_with_stdio(0);
-    cin.tie(0);
 
     int t, n, m, num;
+    unordered_map<int, int> note;
 
-    cin >> t;
+    scanf("%d", &t);
 
-    for (int i = 0; i < t; i++)
+    while (t--)
     {
-        cin >> n;
-        map<int, int> note;
+        scanf("%d", &n);
+        note.clear();
 
-        for (int j = 0; j < n; j++)
+        while (n--)
         {
-            cin >> num;
+            scanf("%d", &num);
             note[num] = 1;
         }
 
-        cin >> m;
-        for (int k = 0; k < m; k++)
+        scanf("%d", &m);
+        while (m--)
         {
-            cin >> num;
+            scanf("%d", &num);
             if (note[num] == 1)
-                cout << "1"
-                     << "\n";
+                printf("1\n");
+
             else
-                cout << "0"
-                     << "\n";
+                printf("0\n");
         }
     }
     return 0;
