@@ -9,7 +9,7 @@ int main(void)
     cin.tie(0);
 
     int n, p, ln, pn, cnt = 0;
-    vector<stack<int>> v(7);
+    stack<int> st[7];
 
     cin >> n >> p;
 
@@ -17,19 +17,25 @@ int main(void)
     {
         cin >> ln >> pn;
 
-        if (v[ln].top() > pn && !v[ln].empty())
+        while (!st[ln].empty())
         {
-            while (v[ln].top() > pn && !v[ln].empty())
+            if (st[ln].top() == pn)
+                break;
+            else if (st[ln].top() > pn)
             {
-                v[ln].pop();
+                st[ln].pop();
+                cnt++;
+            }
+            else
+            {
+                st[ln].push(pn);
                 cnt++;
             }
         }
-
-        if (v[ln].top() < pn || v[ln].empty())
+        if (st[ln].empty())
         {
-            v[ln].push(pn);
             cnt++;
+            st[ln].push(pn);
         }
     }
 
