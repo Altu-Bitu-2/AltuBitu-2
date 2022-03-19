@@ -11,81 +11,65 @@ int main(void)
     string str;
     stack<char> ch;
     int res = 0, tmp = 1;
+    bool imp = false;
 
     cin >> str;
 
-    for (int i = 0; i < str.length(); i++)
+    for (int i = 0; i < str.size(); i++)
     {
         if (str[i] == '(')
         {
             tmp *= 2;
             ch.push('(');
         }
-        else if (str[i] == ')')
-        {
-            if (ch.top() != '(' || ch.empty())
-            {
-                res = 0;
-                break;
-            }
-
-            if (str[i - 1] == '(')
-            {
-                res += tmp;
-                tmp /= 2;
-                ch.pop();
-            }
-            else if (ch.top() == '(')
-            {
-                tmp /= 2;
-                ch.pop();
-            }
-            else
-            {
-                res = 0;
-                break;
-            }
-        }
-
         else if (str[i] == '[')
         {
             tmp *= 3;
             ch.push('[');
         }
-        else if (str[i] == ']')
+        else if (str[i] == ')')
         {
-            if (ch.top() != '[' || ch.empty())
+            if (ch.top() != '(' || (ch.empty() || ch.top() != '('))
             {
-                res = 0;
+                imp = true;
                 break;
-            }
-
-            if (str[i - 1] == '[')
-            {
-                res += tmp;
-                tmp /= 3;
-                ch.pop();
-            }
-            else if (ch.top() == '[')
-            {
-                tmp /= 3;
-                ch.pop();
             }
             else
             {
-                res = 0;
+                if (str[i - 1] == '(')
+                {
+                    res += tmp;
+                }
+                tmp /= 2;
+                ch.pop();
+            }
+        }
+        else if (str[i] == ']')
+        {
+            if (ch.top() != '[' || (ch.empty() || ch.top() != '['))
+            {
+                imp = true;
                 break;
+            }
+            else
+            {
+                if (str[i - 1] == '[')
+                {
+                    res += tmp;
+                }
+                tmp /= 3;
+                ch.pop();
             }
         }
     }
 
-    if (ch.empty())
+    if (!ch.empty() || imp)
     {
-        cout << res;
+        cout << 0;
     }
     else
     {
-        cout << "0";
+        cout << res;
     }
 
     return 0;
