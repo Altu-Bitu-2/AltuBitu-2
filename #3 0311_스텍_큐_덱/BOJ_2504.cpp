@@ -15,7 +15,7 @@ int main(void)
 
     cin >> str;
 
-    for (int i = 0; i < str.size(); i++)
+    for (int i = 0; i < str.length(); i++)
     {
         if (str[i] == '(')
         {
@@ -29,7 +29,7 @@ int main(void)
         }
         else if (str[i] == ')')
         {
-            if (ch.top() != '(' || (ch.empty() || ch.top() != '('))
+            if (ch.empty() || ch.top() != '(')
             {
                 imp = true;
                 break;
@@ -46,7 +46,7 @@ int main(void)
         }
         else if (str[i] == ']')
         {
-            if (ch.top() != '[' || (ch.empty() || ch.top() != '['))
+            if (ch.empty() || ch.top() != '[')
             {
                 imp = true;
                 break;
