@@ -2,34 +2,34 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
-const int MAX = 10;
 
-//bottom-up 방식 dp 배열 채우기
-vector<int> numberOfAllCases() {
-    vector<int> dp(MAX + 1, 0);
+int lis(int n, vector<int> &arr) {
+    vector<int> dp(n, 1);
+    int ans = 1;    // 결과 저장 변수 초기화
 
-    dp[0] = dp[1] = 1;
-    dp[2] = 2;
-    for (int i = 3; i <= MAX; i++) {
-        dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3];
+    for (int i = 1; i < n; i++) {   // n만큼 반복
+        for (int j = 0; j < i; j++) {   //i만큼 반복 (1*1, 2*2, 3*3...)
+            if (arr[i] > arr[j]) { //증가하는 관계라면
+                dp[i] = max(dp[i], dp[j] + 1);  // dp 업데이트
+            }
+        }
+        ans = max(ans, dp[i]); //최장 길이 갱신
     }
-    return dp;
+    return ans;
 }
 
 int main() {
-    int t, n;   // 수열의 크기 t, 
+    int n;  // 수열의 길이 n
 
-    //미리 dp 채우기
-    vector<int> dp = numberOfAllCases();
-
-    cin >> t;
-    while (t--) {
-        cin >> n;
-
-        //출력
-        cout << dp[n] << '\n';
+    cin >> n;  // n 입력받기
+    vector<int> arr(n, 0);  // 수열 A
+    for (int i = 0; i < n; i++) {   // n만큼 반복
+        cin >> arr[i];   // 수열 입력받기
     }
+
+    cout << lis(n, arr);    // 수열의 길이 연산+출력
     return 0;
 }
