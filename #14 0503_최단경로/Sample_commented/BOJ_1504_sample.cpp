@@ -36,31 +36,28 @@ vector<int> dijkstra(int start, int v, vector<vector<ci>> &graph) {
 }
 
 int main() {
-    int n, e, a, b, c, v1, v2;
+    int n, e, a, b, c, v1, v2;  // 정점의 개수, 간선의 개수, 정수 abc, 반드시 거쳐야하는 정점 번호 v1 v2
 
-    //입력
-    cin >> n >> e;
+    cin >> n >> e;  // 정점의 개수와 간선의 개수 입력받기
 
     vector<vector<ci>> graph(n + 1, vector<ci>(0));
     vector<vector<int>> dist(3, vector<int>(n + 1, 0));
-    while (e--) { //무방향 그래프
-        cin >> a >> b >> c;
-        graph[a].emplace_back(b, c);
-        graph[b].emplace_back(a, c);
+    while (e--) { // 간선의 개수만큼 반복
+        cin >> a >> b >> c;     // 정수 abc 입력받기
+        graph[a].emplace_back(b, c);    // 그래프 저장
+        graph[b].emplace_back(a, c);    // 그래프 저장
     }
-    cin >> v1 >> v2;
+    cin >> v1 >> v2;    // 반드시 거쳐야하는 정점 입력받기
 
-    //연산
-    vector<int> start_nodes = {1, v1, v2};
-    for (int i = 0; i < 3; i++) { //1, v1, v2에서 시작한 다익스트라 결과 저장
-        dist[i] = dijkstra(start_nodes[i], n, graph);
+    vector<int> start_nodes = {1, v1, v2};  // 시작노드 저장
+    for (int i = 0; i < 3; i++) { // 3번 반복
+        dist[i] = dijkstra(start_nodes[i], n, graph);   // 1, v1, v2에서 시작한 다익스트라 결과 저장
     }
 
     //1->v1->v2->n의 경로와 1->v2->v1->n의 경로 중 최솟값
     //무방향 그래프기 때문에 v1->v2와 v2->v1은 사실 같은 값!
     int ans = min(dist[0][v1] + dist[1][v2] + dist[2][n], dist[0][v2] + dist[2][v1] + dist[1][n]);
 
-    //출력
-    cout << ((ans >= INF) ? -1 : ans);
+    cout << ((ans >= INF) ? -1 : ans);  // 두 개의 정점을 지나는 최단 경로의 길이 출력
     return 0;
 }
