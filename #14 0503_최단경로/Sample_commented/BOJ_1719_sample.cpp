@@ -7,13 +7,13 @@ using namespace std;
 const int INF = 1e5 * 2; //최대 n-1개의 간선을 지나게 됨
 
 void floydWarshall(int n, vector<vector<int>> &graph, vector<vector<int>> &table) {
-    for (int k = 1; k <= n; k++) {
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j <= n; j++) {
-                int new_dist = graph[i][k] + graph[k][j];
-                if (new_dist < graph[i][j]) {
-                    graph[i][j] = new_dist;
-                    table[i][j] = table[i][k];
+    for (int k = 1; k <= n; k++) {  // 집하장 개수만큼 반복
+        for (int i = 1; i <= n; i++) {  // 집하장 개수만큼 반복
+            for (int j = 1; j <= n; j++) {  // 집하장 개수만큼 반복
+                int new_dist = graph[i][k] + graph[k][j];   // 두 시간의 합 저장
+                if (new_dist < graph[i][j]) {   // 저장된 시간이 남은 하나의 시간과 비교했을 때 더 작다면
+                    graph[i][j] = new_dist;     // 더 작은 숫자로 업데이트
+                    table[i][j] = table[i][k];  // 테이블 정보 업데이트
                 }
             }
         }
@@ -32,7 +32,7 @@ int main() {
 
     while (m--) { // 경로의 개수만큼 반복
         cin >> s >> d >> c; // 집하장의 번호와 둘을 오가는 시간 입력받기
-        graph[s][d] = graph[d][s] = c;    //간선 정보
+        graph[s][d] = graph[d][s] = c;    // 간선 정보
 
         table[s][d] = d;    // 테이블에 경로 정보 저장
         table[d][s] = s;    // 테이블에 경로 정보 저장

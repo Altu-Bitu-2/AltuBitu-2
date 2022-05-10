@@ -10,29 +10,29 @@ const int INF = 1e5 * 8 * 3; //최대 N-1개의 간선을 지나게 됨 * 중복
 
 //다익스트라
 vector<int> dijkstra(int start, int v, vector<vector<ci>> &graph) {
-    vector<int> dist(v + 1, INF);
-    priority_queue<ci, vector<ci>, greater<>> pq;
+    vector<int> dist(v + 1, INF);   // 거리 초기화
+    priority_queue<ci, vector<ci>, greater<>> pq;   // 다음 방문할 위치
 
-    dist[start] = 0;
+    dist[start] = 0;    // 시작 노드로 초기화
     pq.push({0, start});
-    while (!pq.empty()) {
-        int weight = pq.top().first;
-        int node = pq.top().second;
-        pq.pop();
+    while (!pq.empty()) {   // 다음 방문할 위치가 없을 때까지 반복
+        int weight = pq.top().first;    // 가중치 업데이트
+        int node = pq.top().second;     // 노드 정점 업데이트
+        pq.pop();   // 업데이트에 반영한 pq 비우기
 
-        if (weight > dist[node]) {
-            continue;
+        if (weight > dist[node]) {   // 원래가 더 작다면
+            continue;   // 계속
         }
-        for (int i = 0; i < graph[node].size(); i++) {
-            int next_node = graph[node][i].first;
-            int next_weight = weight + graph[node][i].second;
-            if (next_weight < dist[next_node]) {
-                dist[next_node] = next_weight;
-                pq.push({next_weight, next_node});
+        for (int i = 0; i < graph[node].size(); i++) {  // 모든 노드 확인
+            int next_node = graph[node][i].first;   // 다음 노드 업데이트
+            int next_weight = weight + graph[node][i].second;   // 다음 가중치 업데이트
+            if (next_weight < dist[next_node]) {    // 원래보다 작다면
+                dist[next_node] = next_weight;  // 거리 업데이트
+                pq.push({next_weight, next_node});  // pq 업데이트
             }
         }
     }
-    return dist;
+    return dist;    // 거리 반환
 }
 
 int main() {

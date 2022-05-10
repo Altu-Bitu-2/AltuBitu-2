@@ -11,27 +11,27 @@ const int INF = 1e7; // 최대 n-1개의 연결관계 있으므로 -> n * (가�
 // 다익스트라
 ci dijkstra(int start, int v, vector<vector<ci>> &graph) {
     priority_queue<ci, vector<ci>, greater<>> pq;
-    vector<int> dist(v + 1, INF);
+    vector<int> dist(v + 1, INF);   // 거리 초기화
 
-    dist[start] = 0;
+    dist[start] = 0; // 시작 노드로 초기화
     pq.push({0, start});
     int cnt = 0, t = 0;     // 총 감염 컴퓨터수, 모두 감염되기까지 걸리는 시간
     while (!pq.empty()) {   // 해킹당한 컴퓨터 개수만큼 반복
-        int weight = pq.top().first;
-        int node = pq.top().second;
-        pq.pop();
+        int weight = pq.top().first;    // 가중치 업데이트
+        int node = pq.top().second;     // 노드 정점 업데이트
+        pq.pop();       // 업데이트에 반영한 pq 비우기
 
-        if (weight > dist[node]) {
-            continue;
+        if (weight > dist[node]) {  // 원래가 더 작다면
+            continue;   // 계속
         }
-        cnt++;
-        t = weight;
-        for (int i = 0; i < graph[node].size(); i++) {
-            int next_node = graph[node][i].first;
-            int next_weight = weight + graph[node][i].second;
-            if (next_weight < dist[next_node]) {
-                dist[next_node] = next_weight;
-                pq.push({next_weight, next_node});
+        cnt++;  // 총 감염 컴퓨터 수 증가
+        t = weight;     // 모두 감염되기까지 걸리는 시간 업데이트
+        for (int i = 0; i < graph[node].size(); i++) {  // 모든 노드 확인
+            int next_node = graph[node][i].first;   // 다음 노드 업데이트
+            int next_weight = weight + graph[node][i].second;   // 다음 가중치 업데이트
+            if (next_weight < dist[next_node]) {    // 원래보다 작다면
+                dist[next_node] = next_weight;  // 거리 업데이트
+                pq.push({next_weight, next_node});  // pq 업데이트
             }
         }
     }
